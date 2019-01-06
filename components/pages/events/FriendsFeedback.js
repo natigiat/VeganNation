@@ -1,0 +1,148 @@
+import React, { Component } from 'react';
+import { StyleSheet, Alert, Keyboard, KeyboardAvoidingView, SafeAreaView, TextInput, Modal, Animated, Share, StatusBar } from 'react-native';
+import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon, Button, TouchableWithoutFeedback, TouchableHighlight, Input } from 'native-base';
+import Dialog, { DialogContent, DialogButton } from 'react-native-popup-dialog';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import SendMessage from './SendMessage'
+import InviteFriends from '../../componentAsset/InviteFriends'
+import { Btnall } from '../../componentAsset/Btnall';
+import { SeparationLine } from '../../componentAsset/SeparationLine';
+var s = require('../style');
+export default class FriendsFeedback extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPopUp: false,
+    };
+
+  }
+
+  async onShare(title, description) {
+
+    try {
+      const result = await Share.share({
+        message:
+          title + ": \n" + description +
+          "\n \nCheck My Post On VeganNation -  app dounload link: https://vegannation.io/getTokens/user/register/g0swl1wfjord2edl",
+      })
+
+
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
+  comment() {
+    this.setState({ showPopUp: !this.state.showPopUp });
+  }
+
+
+
+
+  render() {
+    let title = this.props.dataTitle !== undefined ? this.props.dataTitle : "";
+    let description = this.props.dataDescription !== undefined ? this.props.dataDescription : "";
+
+    var popupStatus = this.state.showPopUp
+    return (
+      <View>
+        <View style={[s.flexRow, s.spaceAround, s.paddingBotton]}>
+          <View >
+            <Text style={s.greenText}>Going</Text>
+            <Text style={[{ textAlign: 'center' }]}>15k</Text>
+          </View>
+          <View>
+            <Text style={s.greenText}>Intrested</Text>
+            <Text style={[{ textAlign: 'center' }]}>54k</Text>
+          </View>
+          <View>
+            <Text style={s.greenText}>Shares</Text>
+            <Text style={[{ textAlign: 'center' }]}>15</Text>
+          </View>
+        </View>
+        <SeparationLine height={2} />
+        <SendMessage />
+        <SeparationLine height={2} />
+        <InviteFriends />
+      </View>
+    );
+
+  }
+
+}
+
+const styles = StyleSheet.create({
+  poptHead: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: 'space-around'
+
+  },
+  text: {
+    color: "#31c58d",
+    fontSize: 12,
+    marginRight: 5
+
+  },
+  widthIcon: {
+
+    textAlign: 'center'
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ecf0f1',
+  },
+  button: {
+    margin: 24,
+    padding: 40,
+    width: '50%',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "transparent",
+    textAlign: 'center',
+    color: '#ccc',
+    backgroundColor: '#31c58d'
+  },
+  keyboardAvoidContainer: {
+    // flex: 1,
+    // backgroundColor: 'orange'
+  },
+  dialog: {
+    width: '100%'
+
+  },
+  popupbox: {
+
+    flex: 1,
+    width: '100%',
+    height: 40,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,.6)',
+    position: 'absolute', top: 0, left: 0, right: 0
+
+
+  },
+  form: {
+    // position: 'absolute',
+    // top: -40,
+    // zIndex: 5,
+    // // flex: 1,
+    // width: '100%',
+    // justifyContent: 'space-between',
+  },
+
+});
